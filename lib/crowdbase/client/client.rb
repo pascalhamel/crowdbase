@@ -5,16 +5,29 @@ module Crowdbase
     attribute :client_secret, String
     attribute :subdomain, String
     
+    attribute :username, String
+    attribute :password, String
+    
     attribute :user_id, String
     attribute :access_token, String
+    attribute :refresh_token, String
+    attribute :expires_at, Time
+    
+    validates_format_of :username, :with => EMAIL_REGEXP
+    validates_presence_of :password
     
     validates_presence_of :client_id
     validates_presence_of :client_secret
     validates_presence_of :subdomain
     
-    def authorize!(username, password)
-      raise ArgumentError, "Invalid username" if (username.blank?) || (!username.kind_of? String) || (!(username =~ EMAIL_REGEXP))
-      raise ArgumentError, "Invalid password" if (password.blank?) || (!password.kind_of? String)
+    def initialize(*args)
+      super(*args)
+      self.authorize! if self.valid?
+    end # def initialize
+    
+    def authorize!(options = {})
+      self.username = options[:username] if options[:username]
+      self.password = options[:password] if options[:password]
       
       if self.valid?
         post_body = post_body_for_authentication
@@ -28,7 +41,12 @@ module Crowdbase
         
         self.access_token = access_token
         self.user_id = user_id
+        
+        self.refresh_token = result[:refresh_token] if result[:refresh_token]
+        self.expires_at = Time.at(Time.now.to_i +  result[:expires_in].to_i) if result[:expires_in]
         true
+      else
+        Log.warn "Invalid client credentials. #{self.errors.messages}"
       end # if the client_id, secret and subdomain are present
     rescue Excon::Errors::SocketError => ex
       Log.error "Unable to access the Crowdbase API. Reason: #{ex.inspect}"
@@ -60,7 +78,9 @@ module Crowdbase
         client = self.new(
           :client_id => config_hash[:client_id], 
           :client_secret => config_hash[:client_secret],
-          :subdomain => config_hash[:subdomain]
+          :subdomain => config_hash[:subdomain],
+          :username => config_hash[:username],
+          :password => config_hash[:password]
         )
         
         client
