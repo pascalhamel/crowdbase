@@ -1,4 +1,6 @@
 require "active_support/all"
+require "pathname"
+require "toystore"
 
 module Crowdbase
   class << self
@@ -19,4 +21,6 @@ end # module Crowdbase
 include Crowdbase
 
 require Crowdbase.root.join("lib/crowdbase/core/constants")
+require Crowdbase.root.join("lib/crowdbase/models/data_model")
+require Crowdbase.root.join("lib/crowdbase/models/user")
 require Crowdbase.root.join("lib/crowdbase/client/client")

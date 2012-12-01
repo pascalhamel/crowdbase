@@ -3,7 +3,7 @@ module Crowdbase
     attr_reader :client_id, :client_secret, :subdomain
     
     def initialize(*args)
-      # TODO: Fill in
+      # TODO:
     end # def initialize
     
   end # class Client
