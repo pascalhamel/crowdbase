@@ -50,7 +50,7 @@ module Crowdbase
     
     def initialize(*args)
       super
-      self.nb_volunteered_topics = args.first[:nb_volonteered_topics]
+      self.nb_volunteered_topics = args.try(:first).try(:[], :nb_volonteered_topics)
     end # def initialize
   end # class Stats
 end # module Crowdbase

@@ -4,9 +4,10 @@ module Crowdbase
   
   # API Methods
   ME_URL = "#{API_ENDPOINT}/v1/me"
+  FOLLOWING_URL = "#{ME_URL}/following"
+  FOLLOWERS_URL = "#{ME_URL}/followers"
   
   # Various useful regular expressions
-  KEY_SCHEMA_REGEXP = /\A[\w\-]+((\:[\w\-]+)*)?\z/
   EMAIL_REGEXP = /^([\w\!\#$\%\&\'\*\+\-\/\=\?\^\`{\|\}\~]+\.)*[\w\!\#$\%\&\'\*\+\-\/\=\?\^\`{\|\}\~]+@((((([a-z0-9]{1}[a-z0-9\-]{0,62}[a-z0-9]{1})|[a-z])\.)+[a-z]{2,6})|(\d{1,3}\.){3}\d{1,3}(\:\d{1,5})?)$/i
   URL_REGEXP = /\A(https?:\/\/)?([\da-z\.-]+)\.([a-z\.]{2,6})([\/\w \.-]*)*\/?\z/i
   

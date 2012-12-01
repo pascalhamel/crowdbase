@@ -36,7 +36,14 @@ module Crowdbase
       
       case
       when status == 200
-        result[:body].symbolize_keys!
+        result = result[:body]
+        if result.kind_of? Array
+          result.map { |elem| elem.symbolize_keys! }
+        elsif result.kind_of? Hash
+          result.symbolize_keys!
+        else
+          result
+        end # symbolize the keys of the result
       when status == 503
         raise APIScheduledMaintenanceError
       when status == 500

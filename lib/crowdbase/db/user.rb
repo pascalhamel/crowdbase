@@ -3,7 +3,7 @@ module Crowdbase
     
     attribute :first_name, String
     attribute :last_name, String
-    attribute :job_description, String
+    attribute :job_title, String
     attribute :email, String
     attribute :post_email, String
     
@@ -23,9 +23,16 @@ module Crowdbase
     validates_format_of :email, :with => EMAIL_REGEXP
     validates_format_of :post_email, :with => EMAIL_REGEXP
     
-    def complete_name
+    def initialize(*args)
+      super
+      self.job_title = args.try(:first).try(:[], :job_description)
+      self.stats = Stats.new(args.try(:first))
+      self.images = Images.new(args.try(:first))
+    end # def initialize
+    
+    def name
       "#{self.first_name.try(:strip)} #{self.last_name.try(:strip)}".strip
-    end # def complete_name
+    end # def name
     
     def valid?
       super
