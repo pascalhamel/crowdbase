@@ -27,7 +27,7 @@ Gem::Specification.new do |s|
   s.add_dependency "excon", ">= 0.14"
   s.add_dependency "yajl-ruby", ">= 1.1"
   
-  s.files         = FileList["lib/**/*.rb", "bin/*", "[A-Z]*", "config/**/*", "spec/**/*"].to_a
+  s.files         = FileList["lib/**/*.rb", "bin/*", "[A-Z]*", "spec/**/*"].to_a
   s.test_files    = FileList["spec/**/*"].to_a
   s.require_paths = ["lib", "."]
 end # Gem::Specification.new
