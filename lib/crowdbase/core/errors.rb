@@ -10,8 +10,15 @@ module Crowdbase
   class InvalidCredentialsError < StandardError
     def initialize(message)
       message = "Invalid credentials sent!" unless message
-      super
+      super(message)
     end # def initialize
   end # class InvalidCredentialsError
+  
+  class APIRequestFailedError < StandardError
+    def initialize(url)
+      message = "Request failed: #{url}"
+      super(message)
+    end # def initialize
+  end # class APIRequestFailedError
   
 end # module Crowdbase

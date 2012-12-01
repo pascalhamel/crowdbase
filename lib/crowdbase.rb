@@ -15,7 +15,7 @@ module Crowdbase
     end # def seed_data_folder
     
     def env
-      @env ||= ENV["ENVIRONMENT"]
+      @env ||= ENV["ENVIRONMENT"] || "development"
     end # def env
     
     def reload!
@@ -25,7 +25,10 @@ module Crowdbase
     
     def initialize!
       Core.initialize!
+      DB.initialize!
+      API.initialize!
     end # def initialize
+    
   end # class << self
 end # module Crowdbase
 
@@ -33,6 +36,6 @@ include Crowdbase
 
 require Crowdbase.root.join("lib/crowdbase/core/core")
 require Crowdbase.root.join("lib/crowdbase/db/db")
-require Crowdbase.root.join("lib/crowdbase/client/client")
+require Crowdbase.root.join("lib/crowdbase/api/api")
 
 Crowdbase.initialize!

@@ -1,5 +1,8 @@
 module Crowdbase
   class Client < DataModel
+    include Gateway
+    include Methods
+    include Helpers
     
     attribute :client_id, String
     attribute :client_secret, String
@@ -30,12 +33,7 @@ module Crowdbase
       self.password = options[:password] if options[:password]
       
       if self.valid?
-        post_body = post_body_for_authentication
-        post_body = "#{post_body}&username=#{username}&password=#{password}"
-        
-        result = JSON.parse Excon.post(ACCESS_TOKEN_ENDPOINT, :body => post_body).body
-        result.symbolize_keys!
-        
+        result = perform_request!(POST, ACCESS_TOKEN_URL, { :data => post_body_for_authentication })
         access_token, user_id = result[:access_token], result[:user_id]
         raise InvalidCredentialsError if access_token.blank? || user_id.blank?
         
@@ -47,23 +45,16 @@ module Crowdbase
         true
       else
         Log.warn "Invalid client credentials. #{self.errors.messages}"
+        false
       end # if the client_id, secret and subdomain are present
-    rescue Excon::Errors::SocketError => ex
-      Log.error "Unable to access the Crowdbase API. Reason: #{ex.inspect}"
-      false
-    rescue => ex
-      Log.error "Unable to retrieve access token! Reason: #{ex.inspect}"
+    rescue APIRequestFailedError => ex
+      Log.error "Request failed! #{ex.inspect}"
       false
     end # def authorize!
     
     def authenticated?
       self.access_token.blank?
     end # def authenticated
-    
-    def post_body_for_authentication
-      "client_id=#{self.client_id}&client_secret=#{self.client_secret}&subdomain=#{subdomain}&grant_type=#{PASSWORD_GRANT_TYPE}"
-    end # def post_body_for_authentication
-    private :post_body_for_authentication
     
     class << self
       def from_yml_config!(config_file)
