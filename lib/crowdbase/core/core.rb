@@ -1,4 +1,5 @@
 require Crowdbase.root.join("lib/crowdbase/core/logger")
+require Crowdbase.root.join("lib/crowdbase/core/utils")
 require Crowdbase.root.join("lib/crowdbase/core/constants")
 require Crowdbase.root.join("lib/crowdbase/core/errors")
 

@@ -8,11 +8,16 @@ module Crowdbase
   end # class ConfigurationError
   
   class InvalidCredentialsError < StandardError
-    def initialize(message)
-      message = "Invalid credentials sent!" unless message
-      super(message)
+    def initialize(message = "Invalid credentials sent!")
+      super
     end # def initialize
   end # class InvalidCredentialsError
+  
+  class MalformedResourceError < StandardError
+    def initialize(message = "Malformed resource.")
+      super
+    end # def initialize
+  end # class MalformedResourceError
   
   class APIRequestFailedError < StandardError
     def initialize(url)
@@ -22,29 +27,25 @@ module Crowdbase
   end # class APIRequestFailedError
   
   class APIInternalServerError < StandardError
-    def initialize(message)
-      message = "Crowdbase API is down." unless message
-      super(message)
+    def initialize(message = "Crowdbase API is down.")
+      super
     end # def initialize
   end # class
   
   class APIScheduledMaintenanceError < StandardError
-    def initialize(message)
-      message = "Crowdbase API is down for scheduled maintenance" unless message
+    def initialize(message = "Crowdbase API is down for scheduled maintenance")
       super(message)
     end # def initialize
   end # class APIScheduledMaintenanceError
   
   class APIUnauthorizedRequestError < StandardError
-    def initialize(message)
-      message = "Unauthorized request performed. Check your credentials" unless message
+    def initialize(message = "Unauthorized request performed. Check your credentials")
       super(message)
     end # def initialize
   end # class APIUnauthorizedRequestError
   
   class APIBadRequestError < StandardError
-    def initialize(message)
-      message = "Bad request performed." unless message
+    def initialize(message = "Bad request performed.")
       super(message)
     end # def initialize
   end # class APIBadRequestError < StandardError
