@@ -22,6 +22,12 @@ module Crowdbase
       User.new(user)
     end # def user
     
+    def search_users(query_string)
+      return nil if query_string.blank?
+      users = perform_authorized_request!(GET, "#{USERS_SEARCH_URL}?q=#{query_string}")
+      users.map! { |u| u[:id] }.map { |user_id| user(user_id) }
+    end # def search_users
+    
     def following
       followings = perform_authorized_request!(GET, FOLLOWING_URL)
       followings.map { |following| User.new(following) }
@@ -42,6 +48,12 @@ module Crowdbase
       featured_notes.map { |note| Note.new(note) }
     end # def featured_notes
     
+    def search_notes(query_string)
+      return nil if query_string.blank?
+      notes = perform_authorized_request!(GET, "#{NOTES_SEARCH_URL}?q=#{query_string}")
+      notes.map! { |n| n[:id] }.map { |note_id| note(note_id) }
+    end # def search_users
+    
     def note(note_id)
       return nil if note_id.blank?
       note = perform_authorized_request!(GET, "#{NOTES_URL}/#{note_id}")
@@ -57,6 +69,12 @@ module Crowdbase
       featured_links = perform_authorized_request!(GET, FEATURED_LINKS_URL)
       featured_links.map { |link| Linw.new(link) }
     end # def featured_links
+    
+    def search_links(query_string)
+      return nil if query_string.blank?
+      links = perform_authorized_request!(GET, "#{LINKS_SEARCH_URL}?q=#{query_string}")
+      links.map! { |l| l[:id] }.map { |link_id| link(link_id) }
+    end # def search_users
     
     def link(link_id)
       return nil if link_id.blank?
@@ -74,9 +92,15 @@ module Crowdbase
       featured_questions.map { |question| Question.new(question) }
     end # def featured_questions
     
+    def search_questions(query_string)
+      return nil if query_string.blank?
+      questions = perform_authorized_request!(GET, "#{QUESTIONS_SEARCH_URL}?q=#{query_string}")
+      questions.map! { |q| q[:id] }.map { |q_id| question(q_id) }
+    end # def search_users
+    
     def question(question_id)
       return nil if question_id.blank?
-      link = perform_authorized_request!(GET, "#{QUESTIONS_URL}/#{question_id}")
+      question = perform_authorized_request!(GET, "#{QUESTIONS_URL}/#{question_id}")
       Question.new(question)
     end # def topic
     
