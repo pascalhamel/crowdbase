@@ -16,7 +16,6 @@ module Crowdbase
     end # class << self
     
     def from_resource(resource)
-      puts "from resource: #{resource.inspect}" if self.kind_of? Stats
       raise MalformedResourceError unless resource.kind_of? String or resource.kind_of? Hash
       resource = JSON.parse resource if resource.kind_of? String
       Utils.recursive_symbolize_keys!(resource) if resource.kind_of? Hash

@@ -8,6 +8,7 @@ module Crowdbase
   # Various useful regular expressions
   KEY_SCHEMA_REGEXP = /\A[\w\-]+((\:[\w\-]+)*)?\z/
   EMAIL_REGEXP = /^([\w\!\#$\%\&\'\*\+\-\/\=\?\^\`{\|\}\~]+\.)*[\w\!\#$\%\&\'\*\+\-\/\=\?\^\`{\|\}\~]+@((((([a-z0-9]{1}[a-z0-9\-]{0,62}[a-z0-9]{1})|[a-z])\.)+[a-z]{2,6})|(\d{1,3}\.){3}\d{1,3}(\:\d{1,5})?)$/i
+  URL_REGEXP = /\A(https?:\/\/)?([\da-z\.-]+)\.([a-z\.]{2,6})([\/\w \.-]*)*\/?\z/i
   
   # Application constants
   PASSWORD_GRANT_TYPE = "password"

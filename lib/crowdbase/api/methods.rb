@@ -5,6 +5,7 @@ module Crowdbase
       resource = perform_authorized_request!(GET, ME_URL)
       user = User.new(resource)
       user.stats = Stats.new(resource)
+      user.images = Images.new(resource)
       user
     end # def me
     
