@@ -1,4 +1,5 @@
 require "active_support/all"
+require "log4r"
 require "pathname"
 require "toystore"
 
@@ -20,13 +21,17 @@ module Crowdbase
       Dir.glob(self.root.join("lib/**/*.rb")).each { |source| load source }
       nil
     end # def reload!
+    
+    def initialize!
+      Core.initialize!
+    end # def initialize
   end # class << self
 end # module Crowdbase
 
 include Crowdbase
 
-require Crowdbase.root.join("lib/crowdbase/core/constants")
-require Crowdbase.root.join("lib/crowdbase/core/errors")
-require Crowdbase.root.join("lib/crowdbase/models/data_model")
-require Crowdbase.root.join("lib/crowdbase/models/user")
+require Crowdbase.root.join("lib/crowdbase/core/core")
+require Crowdbase.root.join("lib/crowdbase/db/db")
 require Crowdbase.root.join("lib/crowdbase/client/client")
+
+Crowdbase.initialize!

@@ -13,9 +13,11 @@ module Crowdbase
     
     def authenticate!
       if self.valid?
-        # TODO: Get token, store it, return true
+        Excon.get()
       end
       false
+    rescue Excon::Errors::SocketError => ex
+      # TODO: Log a message
     end # def authenticate!
     
     def authenticated?
