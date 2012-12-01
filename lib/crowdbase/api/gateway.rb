@@ -12,7 +12,10 @@ module Crowdbase
         raise ArgumentError "Unknown verb: #{verb}"
       end
       
-      result.symbolize_keys!
+      parse_result(result.symbolize_keys!)
+    rescue *CROWDBASE_API_ERRORS => ex
+      Log.warn "Request unsuccessful: #{ex.inspect}"
+      nil
     rescue Excon::Errors::SocketError => ex
       Log.error "Unable to access the Crowdbase API. Reason: #{ex.inspect}"
       raise APIRequestFailedError, url
@@ -26,6 +29,26 @@ module Crowdbase
       options[:headers] = headers
       perform_request!(verb, url, options)
     end # def perform_authorized_request!
+    
+    def parse_result(result)
+      return result.symbolize_keys! unless result[:code]      
+      status = result[:code]
+      
+      case
+      when status == 200
+        result[:body].symbolize_keys!
+      when status == 503
+        raise APIScheduledMaintenanceError
+      when status == 500
+        raise APIInternalServerError
+      when status == 400
+        raise APIBadRequestError
+      when status == 401
+        raise APIUnauthorizedError
+      else
+        raise APIRequestFailedError
+      end
+    end # def parse_result
     
   end # module Gateway
 end # module Crowdbase

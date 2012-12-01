@@ -21,4 +21,34 @@ module Crowdbase
     end # def initialize
   end # class APIRequestFailedError
   
+  class APIInternalServerError < StandardError
+    def initialize(message)
+      message = "Crowdbase API is down." unless message
+      super(message)
+    end # def initialize
+  end # class
+  
+  class APIScheduledMaintenanceError < StandardError
+    def initialize(message)
+      message = "Crowdbase API is down for scheduled maintenance" unless message
+      super(message)
+    end # def initialize
+  end # class APIScheduledMaintenanceError
+  
+  class APIUnauthorizedRequestError < StandardError
+    def initialize(message)
+      message = "Unauthorized request performed. Check your credentials" unless message
+      super(message)
+    end # def initialize
+  end # class APIUnauthorizedRequestError
+  
+  class APIBadRequestError < StandardError
+    def initialize(message)
+      message = "Bad request performed." unless message
+      super(message)
+    end # def initialize
+  end # class APIBadRequestError < StandardError
+  
+  CROWDBASE_API_ERRORS = [APIInternalServerError, APIScheduledMaintenanceError, APIUnauthorizedRequestError, APIBadRequestError]
+  
 end # module Crowdbase
