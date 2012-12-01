@@ -51,5 +51,13 @@ module Crowdbase
       self.section_id = section_info.try(:[], "id")
     end # def initialize
     
+    def owner
+      Client.instance.user(owner_id)
+    end # def owner
+    
+    def topics
+      topic_ids.map { |topic_id| Client.instance.topic(topic_id) }
+    end # def topics
+    
   end # class Post
 end # module Crowdbase

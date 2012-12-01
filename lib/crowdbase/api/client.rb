@@ -57,6 +57,8 @@ module Crowdbase
     end # def authenticated
     
     class << self
+      attr_accessor :instance
+      
       def from_yml_config!(config_file)
         raise ConfigurationError, config_file unless File.exist? config_file
         config_hash = (YAML.load ERB.new(File.read(config_file)).result).with_indifferent_access.symbolize_keys
@@ -74,7 +76,7 @@ module Crowdbase
           :password => config_hash[:password]
         )
         
-        client
+        self.instance = client
       end # def from_yml_config!
     end # class << self
     

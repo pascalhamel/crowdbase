@@ -4,6 +4,7 @@ module Crowdbase
   
   # API method URLs
   ME_URL = "#{API_ENDPOINT}/v1/me"
+  POSTS_URL = "#{ME_URL}/posts"
   FOLLOWING_URL = "#{ME_URL}/following"
   FOLLOWERS_URL = "#{ME_URL}/followers"
   NOTES_URL = "#{API_ENDPOINT}/v1/notes"
@@ -13,6 +14,7 @@ module Crowdbase
   QUESTIONS_URL = "#{API_ENDPOINT}/v1/questions"
   FEATURED_QUESTIONS_URL = "#{QUESTIONS_URL}/featured"
   TOPICS_URL = "#{API_ENDPOINT}/v1/topics"
+  USERS_URL = "#{API_ENDPOINT}/v1/users"
   
   # Various useful regular expressions
   EMAIL_REGEXP = /^([\w\!\#$\%\&\'\*\+\-\/\=\?\^\`{\|\}\~]+\.)*[\w\!\#$\%\&\'\*\+\-\/\=\?\^\`{\|\}\~]+@((((([a-z0-9]{1}[a-z0-9\-]{0,62}[a-z0-9]{1})|[a-z])\.)+[a-z]{2,6})|(\d{1,3}\.){3}\d{1,3}(\:\d{1,5})?)$/i
