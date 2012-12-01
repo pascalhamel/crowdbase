@@ -18,10 +18,13 @@ module Crowdbase
     
     validates_presence_of :first_name
     validates_presence_of :last_name
-    validates_presence_of :job_description
+    validates_presence_of :job_title
     
     validates_format_of :email, :with => EMAIL_REGEXP
     validates_format_of :post_email, :with => EMAIL_REGEXP
+    
+    validates_type_of :stats, :as => Stats
+    validates_type_of :images, :as => Images
     
     def initialize(*args)
       super

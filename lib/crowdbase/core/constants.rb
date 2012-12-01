@@ -2,10 +2,14 @@ module Crowdbase
   API_ENDPOINT = "https://api.crowdbase.com"
   ACCESS_TOKEN_URL = "#{API_ENDPOINT}/oauth/token"
   
-  # API Methods
+  # API method URLs
   ME_URL = "#{API_ENDPOINT}/v1/me"
   FOLLOWING_URL = "#{ME_URL}/following"
   FOLLOWERS_URL = "#{ME_URL}/followers"
+  NOTES_URL = "#{API_ENDPOINT}/v1/notes"
+  FEATURED_NOTES_URL = "#{NOTES_URL}/featured"
+  LINKS_URL = "#{API_ENDPOINT}/v1/links"
+  FEATURED_LINKS_URL = "#{LINKS_URL}/featured"
   
   # Various useful regular expressions
   EMAIL_REGEXP = /^([\w\!\#$\%\&\'\*\+\-\/\=\?\^\`{\|\}\~]+\.)*[\w\!\#$\%\&\'\*\+\-\/\=\?\^\`{\|\}\~]+@((((([a-z0-9]{1}[a-z0-9\-]{0,62}[a-z0-9]{1})|[a-z])\.)+[a-z]{2,6})|(\d{1,3}\.){3}\d{1,3}(\:\d{1,5})?)$/i

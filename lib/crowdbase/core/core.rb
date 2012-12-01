@@ -3,6 +3,9 @@ require Crowdbase.root.join("lib/crowdbase/core/utils")
 require Crowdbase.root.join("lib/crowdbase/core/constants")
 require Crowdbase.root.join("lib/crowdbase/core/errors")
 
+require Crowdbase.root.join("lib/crowdbase/core/validators/type_validator")
+require Crowdbase.root.join("lib/crowdbase/core/validators/type_list_validator")
+
 module Crowdbase
   module Core
     class << self
