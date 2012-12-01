@@ -1,5 +1,4 @@
 module Crowdbase
-  class Note < DataModel
-    
+  class Note < Post
   end # class Note
 end # module Crowdbase

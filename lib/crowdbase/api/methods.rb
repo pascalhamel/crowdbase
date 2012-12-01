@@ -35,5 +35,20 @@ module Crowdbase
       featured_links.map { |link| Linw.new(link) }
     end # def featured_links
     
+    def questions
+      questions = perform_authorized_request!(GET, QUESTIONS_URL)
+      questions.map { |question| Question.new(question) }
+    end # def questions
+    
+    def featured_questions
+      featured_questions = perform_authorized_request!(GET, FEATURED_QUESTIONS_URL)
+      featured_questions.map { |question| Question.new(question) }
+    end # def featured_questions
+    
+    def topics
+      topics = perform_authorized_request!(GET, TOPICS_URL)
+      topics.map { |topic| Topic.new(topic) }
+    end # def topics
+    
   end # module Methods
 end # module Crowdbase
