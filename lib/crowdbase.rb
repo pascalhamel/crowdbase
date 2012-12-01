@@ -2,6 +2,7 @@ require "active_support/all"
 require "log4r"
 require "pathname"
 require "toystore"
+require "excon"
 
 module Crowdbase
   class << self
