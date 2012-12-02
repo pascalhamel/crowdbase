@@ -32,6 +32,12 @@ module Crowdbase
   PASSWORD_GRANT_TYPE = "password"
   LOG_DIR = Crowdbase.root.join("logs")
   
+  NOTE = "note"
+  LINK = "link"
+  QUESTION = "question"
+  TOKEN = "token"
+  CROWDBASE_RESOURCES = [NOTE, LINK, QUESTION, TOKEN]
+  
   # API constants
   GET = "get"
   POST = "post"

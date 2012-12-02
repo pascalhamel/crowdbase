@@ -1,5 +1,6 @@
 module Crowdbase
   class Post < DataModel
+    attribute :title, String
     
     attribute :viewed_by_user, Object
     attribute :starred_by_user, Object
@@ -17,6 +18,8 @@ module Crowdbase
     attribute :owner_id, String
     attribute :section_id, String
     attribute :topic_ids, Array
+    
+    validates_presence_of :title
     
     validates_type_of :viewed_by_user, :in => [TrueClass, FalseClass]
     validates_type_of :starred_by_user, :in => [TrueClass, FalseClass]

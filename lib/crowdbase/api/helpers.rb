@@ -10,6 +10,19 @@ module Crowdbase
     def authorization_header
       {"Authorization" => "Bearer #{self.access_token}"}
     end # def authorization_header
+    
+    def post_body_from_data(data)
+      raise MalformedResourceError, "Invalid post data: #{data}" unless data.kind_of? Hash
+      data_type = data[:type] || TOKEN
+      
+      raise MalformedResourceError, "Unknown resource type: #{data_type}" unless CROWDBASE_RESOURCES.include? data_type
+      case
+      when data_type == NOTE
+        "title=#{data[:title]}&body=#{data[:body]}&section_id=#{data[:section_id]}"
+      when data_type == TOKEN
+        post_body_for_authentication
+      end
+    end # def post_body_from_data
         
   end # module Helpers
 end # module Crowdbase

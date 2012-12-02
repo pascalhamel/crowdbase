@@ -33,7 +33,7 @@ module Crowdbase
       self.password = options[:password] if options[:password]
       
       if self.valid?
-        result = perform_request!(POST, ACCESS_TOKEN_URL, { :data => post_body_for_authentication })
+        result = perform_request!(POST, ACCESS_TOKEN_URL)
         access_token, user_id = result[:access_token], result[:user_id]
         raise InvalidCredentialsError if access_token.blank? || user_id.blank?
         

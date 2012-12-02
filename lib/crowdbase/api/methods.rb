@@ -60,6 +60,15 @@ module Crowdbase
       Note.new(note)
     end # def topic
     
+    def post_note(note_data)
+      raise MalformedResourceError, "Malformed note data: #{note_data}" unless note_data.kind_of? Hash
+      raise MalformedResourceError, "Missing title" unless note_data[:title]
+      
+      note_data[:type] = NOTE
+      response = perform_authorized_request!(POST, NOTES_URL, :data => note_data)
+      note(response[:id])
+    end # def post_note
+    
     def links
       links = perform_authorized_request!(GET, LINKS_URL)
       links.map { |link| Link.new(link) }

@@ -6,7 +6,10 @@ module Crowdbase
       when verb == GET
         result = JSON.parse Excon.get(url, :headers => options[:headers]).body
       when verb == POST
-        result = JSON.parse Excon.post(url, :body => options[:data]).body
+        post_body = post_body_from_data(options[:data] || {})
+        headers = options[:headers] || {}
+        
+        result = JSON.parse Excon.post(url, :body => post_body, :headers => headers).body
       else
         Log.error "Unkown HTTP verb: #{verb}"
         raise ArgumentError "Unknown verb: #{verb}"
