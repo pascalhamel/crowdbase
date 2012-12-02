@@ -39,3 +39,5 @@ require Crowdbase.root.join("lib/crowdbase/db/db")
 require Crowdbase.root.join("lib/crowdbase/api/api")
 
 Crowdbase.initialize!
+
+
