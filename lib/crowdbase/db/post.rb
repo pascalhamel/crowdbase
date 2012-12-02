@@ -1,19 +1,21 @@
+require Crowdbase.root.join("lib/crowdbase/api/api")
+
 module Crowdbase
   class Post < DataModel
     attribute :title, String
     
-    attribute :viewed_by_user, Object
-    attribute :starred_by_user, Object
-    attribute :liked_by_user, Object
+    attribute :viewed_by_user, Object, :default => false
+    attribute :starred_by_user, Object, :default => false
+    attribute :liked_by_user, Object, :default => false
     
-    attribute :is_featured, Object
+    attribute :is_featured, Object, :default => false
     
     attribute :comments_count, Integer, :default => 0
     attribute :likers_count, Integer, :default => 0
     attribute :views_count, Integer, :default => 0
     
-    attribute :created_at, Time
-    attribute :updated_at, Time
+    attribute :created_at, Time, :default => Time.now
+    attribute :updated_at, Time, :default => Time.now
     
     attribute :owner_id, String
     attribute :section_id, String
@@ -31,7 +33,6 @@ module Crowdbase
     validates_numericality_of :views_count, :greater_than_or_equal_to => 0
     
     validates_presence_of :owner_id
-    validates_presence_of :section_id
     
     validates_type_of :topic_ids, :as => Array
     validates_elements_of :topic_ids, :as => String
@@ -40,7 +41,7 @@ module Crowdbase
       super
       self.type = self.class.to_s
       user_info = args.try(:first).try(:[], :user)
-      self.owner_id = user_info.try(:[], "id")
+      self.owner_id = user_info.try(:[], "id") || Client.instance.user_id
       
       link_topics = args.try(:first).try(:[], :topics)
       unless link_topics.blank?
