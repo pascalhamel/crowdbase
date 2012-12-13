@@ -24,9 +24,14 @@ module Crowdbase
     
     def search_users(query_string)
       return nil if query_string.blank?
-      users = perform_authorized_request!(GET, "#{USERS_SEARCH_URL}?q=#{query_string}")
+      users = perform_authorized_request!(GET, "#{USERS_SEARCH_URL}?q=#{CGI::escape(query_string)}")
       users.map! { |u| u[:id] }.map { |user_id| user(user_id) }
     end # def search_users
+
+    def users
+      users = perform_authorized_request!(GET, "#{USERS_URL}")
+      users.map! { |u| u[:id] }.map { |user_id| user(user_id) }
+    end # def users
     
     def following
       followings = perform_authorized_request!(GET, FOLLOWING_URL)
@@ -90,6 +95,15 @@ module Crowdbase
       link = perform_authorized_request!(GET, "#{LINKS_URL}/#{link_id}")
       Link.new(link)
     end # def topic
+
+    def post_link(link_data)
+      raise MalformedResourceError, "Malformed note data: #{link_data}" unless link_data.kind_of? Hash
+      raise MalformedResourceError, "Missing URL" unless link_data[:url]
+
+      link_data[:type] = LINK
+      response = perform_authorized_request!(POST, LINKS_URL, :data => link_data)
+      link(response[:id])
+    end # def post_link
     
     def questions
       questions = perform_authorized_request!(GET, QUESTIONS_URL)
@@ -112,6 +126,15 @@ module Crowdbase
       question = perform_authorized_request!(GET, "#{QUESTIONS_URL}/#{question_id}")
       Question.new(question)
     end # def topic
+
+    def post_question(question_data)
+      raise MalformedResourceError, "Malformed question data: #{question_data}" unless question_data.kind_of? Hash
+      raise MalformedResourceError, "Missing title" unless question_data[:title]
+
+      question_data[:type] = QUESTION
+      response = perform_authorized_request!(POST, QUESTIONS_URL, :data => question_data)
+      question(response[:id])
+    end # def question_note
     
     def topics
       topics = perform_authorized_request!(GET, TOPICS_URL)
