@@ -1,3 +1,6 @@
-Gemfile.lock
 config/
 logs/
+.idea/**/*
+.idea/
+.idea/*
+.DS_Store
