@@ -55,6 +55,10 @@ module Crowdbase
     def authenticated?
       self.access_token.blank?
     end # def authenticated
+
+    def token_expired?
+      self.access_token && self.expires_at < Time.now
+    end
     
     class << self
       attr_accessor :instance
